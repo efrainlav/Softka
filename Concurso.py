@@ -39,24 +39,53 @@ def roster_preguntas():
     lista=[pregunta1,pregunta2,pregunta3,pregunta4,pregunta5,pregunta6,pregunta7,pregunta8,pregunta9,pregunta10,pregunta11,pregunta12,pregunta13,pregunta14,pregunta15,pregunta16,pregunta17,pregunta18,pregunta19,pregunta20,pregunta21,pregunta22,pregunta23,pregunta24,pregunta25]
     return lista   
 
-def roster_premio():
-    lista=[0, 100,1000,10000,100000,1000000]
-    return lista
+def lvl_premio():
+    lista=[100,1000,10000,100000,1000000]
+    lvl=["G1","G2","G3","G4","G5"]
+    return lista, lvl
 
 def filtrado(grupo):
     lvl = grupo
-    Output = [b for b in preguntas if all(a in b for a in lvl)]
+    Output = [x for x in preguntas if lvl in x]
     return Output
 
-def preguntar(grupo):
-    preNivel= filtrado(grupo)
+def preguntar(pre_lvl):
+
     n = randint(0,4)
-    for i in preNivel[n]:
-        print(i)
+
+    while opc!=True:
+        for i in pre_lvl[n]:
+            print(i)
+        user_input = input("Seleccione una respuesta....")
+        
+        if user_input.isnumeric() == False:
+            print("Ingrese una opcion valida")
+        elif user_input<4:
+            opc=True
+        else:
+            "Ingrese un numero entre el 1 y el 4"
+
+    if user_input == pre_lvl[n][5] and t<5:
+        balance= premios[t]
+        print("Felicitaciones, avanzamos al siguiente nivel, y te acabas de ganar %s dolares!!!!" % (balance))
+        t=+1
+        Pre_Nivel= filtrado(lvl[t])
+        balance= premios[t]
+        preguntar(Pre_Nivel1)
+    elif user_input != pre_lvl[n][5]:
+        print("Lastimosamente, la respuesta es Incorrecta!!!)
+        print("Muchas gracias por participar, te llevas un premio de %s dolares!!!!" % (balance)
+    else:
+        print("Felicitaciones, eres el Feliz Ganador del concurso!!!!, te llevas un total de %s dolares y quedas registrado como el ultimo ganador!!!!" % (balance))
+        
+        
+
     
-    user_input = input("Seleccione una respuesta....")
-    if user_input.isnumeric() ==True
-    
+    return 
+
+
+
+
 
 
 
@@ -76,35 +105,33 @@ def resultado(answer,pregunta):
 
 
 
+##############################################
+#Programa principal
 
-
-
-preguntas=roster_preguntas()
-premios=roster_premio()
+###############################################
 
 #Variables de Inicio
-lvl="G1"
-balance= premios[0]
-
+preguntas = roster_preguntas()
+premios, lvl = lvl_premio()
+t=0
+balance= premios[t]
+Pre_Nivel1= filtrado(lvl[t])
 #Filtrado preguntas Nivel 1
-Pregunta= filtrado(lvl)
 
 
 #LOOP PRINCIPAL
 
 while salir != True:
-    print("Bienvenido a quien queire ser millonario, estas listo para participar?")
+    print("Bienvenido a quien quiere ser millonario, estas listo para participar?")
     opcion=input("Presiona 1 para Continuar, presiona 2 para ver el historico de jugarores y 3 para salir")
     if opcion == 1:
-        answer, pregunta= preguntar(lvl)
-
-
-        
+        preguntar(Pre_Nivel1)
+       
     elif opcion == 2:
-        historial();
+        historial()
 
     elif opcion == 3:
-        salir = True;
+        salir = True
         "Que tengas un feliz dia"    
     else:
         print("Digite una opcion valida")
