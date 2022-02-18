@@ -10,6 +10,18 @@ from time import sleep
 import datetime
 
 
+###############################################
+
+#Variables de Inicio
+
+global balance, t
+t=0
+balance=0
+condition = 1
+condition1 = 1
+
+############################################
+
 def roster_preguntas():
     pregunta1=["Cual es la abreviatura de kilometro","1- kl","2- klm","3- km","4- kmt",3,"G1"]
     pregunta2=["Quien salio de la lampara de Aladino","1- Un genio","2- Un principe","3- Una bruja","4- Un sapo",1,"G1"]
@@ -40,7 +52,7 @@ def roster_preguntas():
     return lista   
 
 def lvl_premio():
-    lista=[100,1000,10000,100000,1000000]
+    lista=["$100","$1.000","$10.000","$100.000","$1.000.000", "$10.000.000"]
     lvl=["G1","G2","G3","G4","G5"]
     return lista, lvl
 
@@ -48,75 +60,87 @@ def filtrado(lvl):
     Output = [x for x in preguntas if lvl in x]
     return Output
 
-def preguntar(jugador, pre_lvl,opc):
-    t=0
+def historico(jugador, balance):
+    today = datetime.date.today()
+    registro= "Jugador: %s ----- Fecha: %s ----- Premio: %s\n" % (jugador, today, balance)
+    return registro
+    
+    
+def preguntar(pre_lvl,opc, t, balance):
     n = randint(0,4)
-    balance= premios[t]
+
     
     while not (opc==0):
         list = pre_lvl[n][0:5]
         for i in list:
             print(i)
         user_input = input("Seleccione una respuesta....\n")
+        
+        print("Ingresaste %s" %(user_input))
+        print("Respuesta es %s" %(pre_lvl[n][5]))
+        print("T es %s" %(t))
+        
         if user_input.isnumeric() == False:
             print("Ingrese una opcion valida\n")
         
-        elif abs(int(user_input))<4:
+
+        elif abs(int(user_input))<5:
             opc=0
         
         else:
             print("\n")
             print("Ingrese un numero entre el 1 y el 4\n")
         
-    if user_input == pre_lvl[n][5] and t<5:
+    if int(user_input) == pre_lvl[n][5] and t<6:
         print("Felicitaciones, avanzamos al siguiente nivel, y te acabas de ganar %s dolares!!!!\n" % (balance))
-        t=+1
+        t=t+1
         Pre_Nivel= filtrado(lvl[t])
         balance= premios[t]
-        preguntar(Pre_Nivel1)
+        opc=1
+        print("Nivel "+ str(t))
+        preguntar(Pre_Nivel, opc, t, balance)
     
-    elif user_input != pre_lvl[n][5] and t<5:
+    elif int(user_input) != pre_lvl[n][5] and t<6:
         print("Lastimosamente, la respuesta es Incorrecta!!!\n")
         print("Muchas gracias por participar, te llevas un premio de %s dolares!!!!\n" % (balance))
     
     else:
         print("Felicitaciones, eres el Feliz Ganador del concurso!!!!, te llevas un total de %s dolares y quedas registrado como el ultimo ganador!!!!\n" % (balance))
         
-    today = datetime.date.today()
-    historico= "Jugador: %s ----- Fecha: %s ----- Premio: %s\n" % (jugador, today, balance) 
-    return historico
+    return balance
 
 
 ##############################################
 #Programa principal
 
 ###############################################
-
-#Variables de Inicio
-preguntas = roster_preguntas()
 premios, lvl = lvl_premio()
-balance= premios[0]
+preguntas = roster_preguntas()
+balance = premios[0]
 Pre_Nivel1= filtrado(lvl[0])
 
-condition = 1
-condition1 = 1
 
 #LOOP PRINCIPAL
 while not (condition == 0):
     print("Bienvenido a quien quiere ser millonario, estas listo para participar?\n")
     opcion=input("Presiona 1 para Continuar, presiona 2 para ver el historico de jugarores y 3 para salir\n")
-    if int(opcion) == 1:
+    
+    if opcion.isnumeric() == False:
+        print("Ingrese una opcion valida\n")
+            
+    elif int(opcion) == 1:
         jugador=(input("Ingrese su nombre\n"))
-        historico=preguntar(jugador, Pre_Nivel1, condition1)
+        balance=preguntar(Pre_Nivel1, condition1,t,balance)
+        registro=historico(jugador, balance)
         f = open ('historico.txt','w')
-        f.write(historico)
+        f.write(registro)
         f.close()
       
     elif int(opcion) == 2:
-        f = open ('historico.txt','a')
-        mensaje = f.read()
-        print(mensaje)
-        f.close()
+        with open('historico.txt', 'r', encoding= 'utf-8') as f:
+            mensaje = f.read()
+            print(mensaje)
+            f.close()
         
     elif int(opcion) == 3:
         print("Que tengas un feliz dia\n")
