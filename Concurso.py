@@ -48,34 +48,42 @@ def filtrado(lvl):
     Output = [x for x in preguntas if lvl in x]
     return Output
 
-def preguntar(jugador, pre_lvl):
+def preguntar(jugador, pre_lvl,opc):
+    t=0
     n = randint(0,4)
-    while opc!=True:
-        for i in pre_lvl[n]:
+    balance= premios[t]
+    
+    while not (opc==0):
+        list = pre_lvl[n][0:5]
+        for i in list:
             print(i)
-            user_input = input("Seleccione una respuesta....")
-            if user_input<abs(4):
-                opc=True
-            else:
-                "Ingrese un numero entre el 1 y el 4"
+        user_input = input("Seleccione una respuesta....\n")
+        if user_input.isnumeric() == False:
+            print("Ingrese una opcion valida\n")
         
-    if user_input == pre_lvl[n][5] and t<5:
-        balance= premios[t]
-        print("Felicitaciones, avanzamos al siguiente nivel, y te acabas de ganar %s dolares!!!!" % (balance))
+        elif abs(int(user_input))<4:
+            opc=0
+        
+        else:
+            print("\n")
+            print("Ingrese un numero entre el 1 y el 4\n")
+        
+    if user_input == pre_lvl[n][6] and t<5:
+        print("Felicitaciones, avanzamos al siguiente nivel, y te acabas de ganar %s dolares!!!!\n" % (balance))
         t=+1
         Pre_Nivel= filtrado(lvl[t])
         balance= premios[t]
         preguntar(Pre_Nivel1)
     
-    elif user_input != pre_lvl[n][5] and t<5:
-        print("Lastimosamente, la respuesta es Incorrecta!!!")
-        print("Muchas gracias por participar, te llevas un premio de %s dolares!!!!" % (balance))
+    elif user_input != pre_lvl[n][6] and t<5:
+        print("Lastimosamente, la respuesta es Incorrecta!!!\n")
+        print("Muchas gracias por participar, te llevas un premio de %s dolares!!!!\n" % (balance))
     
     else:
-        print("Felicitaciones, eres el Feliz Ganador del concurso!!!!, te llevas un total de %s dolares y quedas registrado como el ultimo ganador!!!!" % (balance))
+        print("Felicitaciones, eres el Feliz Ganador del concurso!!!!, te llevas un total de %s dolares y quedas registrado como el ultimo ganador!!!!\n" % (balance))
         
     today = datetime.date.today()
-    historico= "Jugador: %s ----- Fecha: %s ----- Premio: %s" % (jugador, today, balance) 
+    historico= "Jugador: %s ----- Fecha: %s ----- Premio: %s\n" % (jugador, today, balance) 
     return historico
 
 
@@ -87,22 +95,19 @@ def preguntar(jugador, pre_lvl):
 #Variables de Inicio
 preguntas = roster_preguntas()
 premios, lvl = lvl_premio()
-t=0
-balance= premios[t]
-Pre_Nivel1= filtrado(lvl[t])
-#Filtrado preguntas Nivel 1
+balance= premios[0]
+Pre_Nivel1= filtrado(lvl[0])
 
-salir=True
-
-
+condition = 1
+condition1 = 1
 
 #LOOP PRINCIPAL
-while salir != True:
-    print("Bienvenido a quien quiere ser millonario, estas listo para participar?")
-    opcion=input("Presiona 1 para Continuar, presiona 2 para ver el historico de jugarores y 3 para salir")
-    
+while not (condition == 0):
+    print("Bienvenido a quien quiere ser millonario, estas listo para participar?\n")
+    opcion=int(input("Presiona 1 para Continuar, presiona 2 para ver el historico de jugarores y 3 para salir\n"))
     if opcion == 1:
-        historico=preguntar(Pre_Nivel1)
+        jugador=(input("Ingrese su nombre\n"))
+        historico=preguntar(jugador, Pre_Nivel1, condition1)
         f = open ('historico.txt','w')
         f.write(historico)
         f.close()
@@ -112,8 +117,10 @@ while salir != True:
         mensaje = f.read()
         print(mensaje)
         f.close()
+        
     elif opcion == 3:
-        salir = True
-        print("Que tengas un feliz dia")
+        print("Que tengas un feliz dia\n")
+        condition = 0
+        
     else:
-        print("Digite una opcion valida")
+        print("Digite una opcion valida\n")
