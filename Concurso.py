@@ -92,6 +92,9 @@ balance= premios[t]
 Pre_Nivel1= filtrado(lvl[t])
 #Filtrado preguntas Nivel 1
 
+salir=True
+
+
 
 #LOOP PRINCIPAL
 while salir != True:
@@ -108,11 +111,9 @@ while salir != True:
         f = open ('historico.txt','r')
         mensaje = f.read()
         print(mensaje)
-        f.close()   
-
+        f.close()
     elif opcion == 3:
         salir = True
         print("Que tengas un feliz dia")
-          
     else:
         print("Digite una opcion valida")
