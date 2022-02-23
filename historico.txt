@@ -1,1 +1,2 @@
-Jugador: efrain1 ----- Fecha: 2022-02-18 ----- Premio: $1.000
+Jugador: elm ----- Fecha: 2022-02-22 ----- Premio: $1.000
+Jugador: thelm ----- Fecha: 2022-02-22 ----- Premio: $1.000

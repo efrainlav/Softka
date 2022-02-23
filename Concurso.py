@@ -68,7 +68,6 @@ def historico(jugador, balance):
     
 def preguntar(pre_lvl,opc, t, balance):
     n = randint(0,4)
-
     
     while not (opc==0):
         list = pre_lvl[n][0:5]
@@ -93,8 +92,11 @@ def preguntar(pre_lvl,opc, t, balance):
         
     if int(user_input) == pre_lvl[n][5] and t<6:
         print("Felicitaciones, avanzamos al siguiente nivel, y te acabas de ganar %s dolares!!!!\n" % (balance))
+        print(t)
         t=t+1
+        print("T mas 1 es: %s" %(t))
         Pre_Nivel= filtrado(lvl[t])
+        print(Pre_Nivel)
         balance= premios[t]
         opc=1
         print("Nivel "+ str(t))
@@ -132,7 +134,7 @@ while not (condition == 0):
         jugador=(input("Ingrese su nombre\n"))
         balance=preguntar(Pre_Nivel1, condition1,t,balance)
         registro=historico(jugador, balance)
-        f = open ('historico.txt','w')
+        f = open ('historico.txt','a')
         f.write(registro)
         f.close()
       
