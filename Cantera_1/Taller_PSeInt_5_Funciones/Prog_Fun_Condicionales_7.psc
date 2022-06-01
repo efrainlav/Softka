@@ -2,6 +2,20 @@ Proceso Talle2_Prog7
 	Definir peso, estatura, imc Como Reales;
 	Definir nombre, apellido Como Caracteres;
 	
+	//FUncion para capturar datos
+	capturaInfo(nombre, apellido, peso, estatura);
+	
+	//Funcion para imprimir matriz
+	matriz(IMC, peso, nombre, apellido, estatura);
+	
+	//FUncion para imprimir resultados
+	impresion(IMC);	
+FinProceso
+
+
+
+//Funcion para capturar datos
+subproceso capturaInfo(nombre Por Referencia, apellido Por Referencia peso Por Referencia, estatura Por Referencia)
 	Escribir "Programa para calcular el calcular el IMC (Índice de masa corporal)";
 	Escribir "Ingrese su nombre: ";
 	leer nombre;
@@ -11,7 +25,11 @@ Proceso Talle2_Prog7
 	leer peso;
 	Escribir "Ingrese su estatura en metros (mt)";
 	leer estatura;
-	
+FinSubProceso
+
+
+//Funcion para imprimir matriz
+subproceso matriz(IMC Por Referencia, peso Por Referencia, nombre Por Referencia, apellido Por Referencia, estatura Por Referencia)
 	IMC <- peso / (estatura*estatura);
 	Escribir " ****************************************************************"; 	
 	Escribir " Composición corporal             Índice de masa corporal (IMC)";
@@ -27,6 +45,10 @@ Proceso Talle2_Prog7
 	Escribir " Peso en Kg: ",peso;
 	Escribir " Estatura en mt: ",estatura;
 	Escribir " IMC: ",IMC;
+FinSubProceso
+
+//FUncion para imprimir resultados
+subproceso impresion(IMC Por Referencia)
 	Si IMC <= 18.5 Entonces
 		Escribir " Composición corporal: Peso inferior al normal";
 	SiNo
@@ -41,6 +63,6 @@ Proceso Talle2_Prog7
 				FinSi
 			FinSi
 		FinSi
-	FinSi	
+	FinSi		
+FinSubProceso
 	
-FinProceso

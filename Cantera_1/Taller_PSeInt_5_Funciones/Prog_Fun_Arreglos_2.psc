@@ -1,4 +1,3 @@
-
 Proceso TallerArreglos2
 	definir num, modulo como entero;
 	dimension num[20], modulo[20];
