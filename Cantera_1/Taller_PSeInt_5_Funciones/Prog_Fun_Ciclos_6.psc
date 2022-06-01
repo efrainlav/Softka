@@ -48,30 +48,9 @@ Proceso TallerCiclos_6
 					leer nombreTemp;
 					posicion<--1;//contador posicion
 					
-					Para j<-0 hasta 2 Hacer
-						si nombreTemp= nombre[j] Entonces
-							posicion<-j;
-						//	escribir "El arreglo en [",j,"] es:",nombre[j];
-						FinSi
-					FinPara
+					Buscar(j, nombreTemp, nombre , posicion);					
 					
-					
-					
-					Si posicion < 0 Entonces
-						nombre[listado]<-nombreTemp;
-						Escribir "Escriba el apellido del contacto:";
-						leer apellido[listado];
-						Escribir "Escriba el nombre de la organizacion a la que pertenece:";
-						leer organizacion[listado];
-						Escribir "Escriba el numero telefonico:";
-						leer telefono[listado];
-						Escribir "El nombre completo de su contacto ", nombre[listado]," ",apellido[listado], ", con el numero telefonico ",telefono[listado],", fue capturado satisfactoriamente.";
-						Escribir "";
-						listado <- listado +1;
-					SiNo
-						Escribir "El contacto con nombre ",nombreTemp, ", ya existe!.";
-						Escribir "";
-					FinSi
+					crearContacto(nombre, nombreTemp, apellido, organizacion, telefono, listado, posicion);
 					
 				SiNo
 					Escribir "No hay espacios para mas numeros telefonicos";
@@ -84,12 +63,7 @@ Proceso TallerCiclos_6
 				leer nombreTemp;
 				posicion<--1;//contador posicion
 				
-				Para j<-0 hasta 2 Hacer
-					si nombreTemp= nombre[j] Entonces
-						posicion<-j;
-						//escribir "El arreglo en [",j,"] es:",nombre[j];
-					FinSi
-				FinPara
+				Buscar(j, nombreTemp, nombre , posicion);
 				
 				Si posicion >= 0 Entonces
 					Escribir "El contacto con el nombre ",nombre[posicion]," y el numero telefonico ",telefono[posicion] ,", ya se encuentra registrado.";
@@ -106,23 +80,9 @@ Proceso TallerCiclos_6
 				leer nombreTemp;
 				posicion<--1;//contador posicion
 				
-				Para j<-0 hasta 2 Hacer
-					si nombreTemp= nombre[j] Entonces
-						posicion<-j;
-						escribir "El arreglo en [",j,"] es:",nombre[j];
-					FinSi
-				FinPara
+				Buscar(j, nombreTemp, nombre , posicion);
 				
-				Si posicion >= 0 Entonces
-					Para j<-posicion hasta listado-2 Hacer
-						nombre[j]<-nombre[j+1];
-					FinPara
-					nombre[listado-1]<-"NN";
-					listado<-listado-1;	
-				SiNo
-					Escribir "El contacto con el nombre ",nombreTemp,", no se encuentra registrado, por lo cual no puede ser eliminado.";
-					Escribir "";	
-				FinSi
+				borrarContacto(posicion, j, nombre, listado, nombreTemp);
 				
 			4:
 				si listado < 1 Entonces
@@ -147,3 +107,48 @@ Proceso TallerCiclos_6
 	
 	
 FinProceso
+
+//Funcion para buscar
+subproceso Buscar(j por referencia,nombreTemp  por referencia, nombre  por referencia, posicion por referencia )
+	Para j<-0 hasta 2 Hacer
+		si nombreTemp= nombre[j] Entonces
+			posicion<-j;
+			//	escribir "El arreglo en [",j,"] es:",nombre[j];
+		FinSi
+	FinPara
+FinSubProceso
+
+
+//Funcion para crear contacto
+SubProceso crearContacto(nombre por referencia, nombreTemp por referencia, apellido por referencia, organizacion por referencia, telefono por referencia, listado por referencia, posicion por referencia )
+	Si posicion < 0 Entonces
+		nombre[listado]<-nombreTemp;
+		Escribir "Escriba el apellido del contacto:";
+		leer apellido[listado];
+		Escribir "Escriba el nombre de la organizacion a la que pertenece:";
+		leer organizacion[listado];
+		Escribir "Escriba el numero telefonico:";
+		leer telefono[listado];
+		Escribir "El nombre completo de su contacto ", nombre[listado]," ",apellido[listado], ", con el numero telefonico ",telefono[listado],", fue capturado satisfactoriamente.";
+		Escribir "";
+		listado <- listado +1;
+	SiNo
+		Escribir "El contacto con nombre ",nombreTemp, ", ya existe!.";
+		Escribir "";
+	FinSi
+FinSubProceso
+
+//Funcion para Borrar 
+SubProceso borrarContacto(posicion por referencia, j por referencia, nombre por referencia, listado por referencia, nombreTemp por referencia)
+	Si posicion >= 0 Entonces
+		Para j<-posicion hasta listado-2 Hacer
+			nombre[j]<-nombre[j+1];
+		FinPara
+		nombre[listado-1]<-"NN";
+		listado<-listado-1;	
+	SiNo
+		Escribir "El contacto con el nombre ",nombreTemp,", no se encuentra registrado, por lo cual no puede ser eliminado.";
+		Escribir "";	
+	FinSi
+FinSubProceso
+
